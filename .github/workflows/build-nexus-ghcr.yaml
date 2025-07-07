@@ -1,7 +1,7 @@
 name: Build & Push Nexus3 Image to GHCR
 
 on:
-  workflow_dispatch: {}  # manual trigger
+  workflow_dispatch: {}  # manual trigger yess!
 
 jobs:
   build-and-push:
