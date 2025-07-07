@@ -1,0 +1,30 @@
+name: Build & Push Nexus3 Image to GHCR
+
+on:
+  workflow_dispatch: {}  # manual trigger
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build image
+        run: |
+          docker build -t ghcr.io/${{ github.repository }}/nexus3-x86-safe:latest .
+
+      - name: Push image
+        run: |
+          docker push ghcr.io/${{ github.repository }}/nexus3-x86-safe:latest
